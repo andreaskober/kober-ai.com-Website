@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="logo-icon.svg" type="image/svg+xml">
+<title>kober-ai.com</title>
+<meta name="description" content="kober-ai.com – Andreas Kober. Eigene Apps für Android und iOS: Mathe Held, SeniorCompanion, Proud & Discipline, Wippen-Clicker und die Führungsapp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Barlow:wght@400;500;600&family=Share+Tech+Mono&display=swap">
+<style>
+/* Layout: neon terminal. Hero with glitch logo, then one "data slab" per app (text left, devices right, alternating), Impressum as a console readout. Single dark look by choice. */
+:root{
+  color-scheme: dark;
+  --bg:#0b0820;          /* night indigo */
+  --bg-2:#120d2e;        /* panel */
+  --line:#2b2363;        /* grid + rules */
+  --fg:#ebe8ff;          /* text */
+  --muted:#9a93cc;       /* secondary text */
+  --magenta:#ff2bd6;     /* primary neon */
+  --cyan:#22e6ff;        /* secondary neon */
+  --volt:#f7e94b;        /* warnings / placeholders */
+  --f-display:"Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
+  --f-body:"Barlow", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"Share Tech Mono", ui-monospace, "Consolas", monospace;
+  --cut:14px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--bg);color:var(--fg);
+  font:400 1.0625rem/1.6 var(--f-body);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:48px 48px;background-position:-1px -1px;
+  background-attachment:fixed;
+}
+body::after{ /* scanlines */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:50;
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px);
+}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+a{color:var(--cyan)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--volt);outline-offset:3px}
+.mono{font-family:var(--f-mono)}
+
+/* Header */
+header.top{position:sticky;top:env(safe-area-inset-top, 0px);z-index:20;background:color-mix(in srgb, var(--bg) 88%, transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top, 0px);z-index:21;background:var(--bg)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-block:12px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg)}
+.brand svg{width:38px;height:38px}
+.word{font:700 1.35rem/1 var(--f-display);letter-spacing:.02em}
+.word .dot{color:var(--magenta)}
+.word .ai{color:var(--cyan)}
+.word .tld{color:var(--muted);font-weight:500}
+nav{display:flex;gap:18px;flex-wrap:wrap}
+nav a{font:500 .8rem/1 var(--f-mono);text-transform:uppercase;letter-spacing:.12em;color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--cyan)}
+
+/* Hero */
+.hero{padding-block:72px 56px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:48px;align-items:center}
+.eyebrow{font:400 .85rem/1 var(--f-mono);color:var(--cyan);letter-spacing:.14em;text-transform:uppercase}
+.eyebrow::before{content:"> ";color:var(--magenta)}
+h1{font:700 clamp(2.4rem, 6vw, 4.6rem)/1.02 var(--f-display);margin:.35em 0 .3em;text-wrap:balance;letter-spacing:-.01em}
+h1 .hl{color:var(--magenta);text-shadow:0 0 18px color-mix(in srgb, var(--magenta) 55%, transparent)}
+.lead{font-size:1.2rem;color:var(--muted);max-width:52ch;margin:0}
+.lead strong{color:var(--fg);font-weight:600}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:28px;font:400 .9rem/1.3 var(--f-mono);color:var(--muted)}
+.stats b{color:var(--volt);font-weight:400}
+.logo-big{position:relative;justify-self:center;width:min(100%, 340px);aspect-ratio:1;max-width:100%}
+.logo-big svg{width:100%;height:100%;overflow:visible}
+.glitch .g-m{animation:gm 4.2s infinite steps(1)}
+.glitch .g-c{animation:gc 4.2s infinite steps(1)}
+@keyframes gm{0%,86%,100%{transform:translate(-3px,0)}88%{transform:translate(-9px,2px)}91%{transform:translate(5px,-2px)}94%{transform:translate(-3px,0)}}
+@keyframes gc{0%,86%,100%{transform:translate(3px,0)}88%{transform:translate(9px,-2px)}91%{transform:translate(-6px,2px)}94%{transform:translate(3px,0)}}
+.pulse{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+
+/* Section heads */
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px;margin-bottom:8px}
+h2{font:700 clamp(1.6rem,3.4vw,2.3rem)/1.1 var(--f-display);margin:0;text-wrap:balance}
+.sec-head .mono{color:var(--muted);font-size:.85rem}
+
+/* App slabs */
+.apps{padding-block:40px 24px}
+.app{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:48px;align-items:center;padding-block:56px;border-bottom:1px dashed var(--line)}
+.app:nth-child(even) .media{order:-1}
+.app:last-child{border-bottom:0}
+.id{font:400 .8rem/1 var(--f-mono);color:var(--magenta);letter-spacing:.14em;text-transform:uppercase}
+.app h3{font:700 clamp(1.8rem,3.6vw,2.6rem)/1.05 var(--f-display);margin:.3em 0 .15em;text-wrap:balance}
+.tagline{font:500 1.15rem/1.4 var(--f-body);color:var(--cyan);margin:0 0 14px}
+.app p{margin:0 0 14px;max-width:58ch;color:color-mix(in srgb, var(--fg) 86%, var(--muted))}
+.feats{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:6px}
+.feats li{padding-left:22px;position:relative}
+.feats li::before{content:"";position:absolute;left:2px;top:.62em;width:8px;height:8px;background:var(--cyan);clip-path:polygon(0 0,100% 50%,0 100%)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:400 .78rem/1 var(--f-mono);letter-spacing:.06em;padding:7px 10px;border:1px solid var(--line);color:var(--muted);background:var(--bg-2)}
+.chip.st{border-color:var(--volt);color:var(--volt)}
+.chip.oss{border-color:var(--cyan);color:var(--cyan)}
+.note{font-size:.88rem;color:var(--muted);margin-top:12px}
+
+/* Device frames */
+.media{min-width:0}
+.phones{display:flex;justify-content:center;align-items:flex-start;gap:14px}
+.phones figure:nth-child(2){margin-top:44px}
+.phones figure:nth-child(3){margin-top:12px}
+figure{margin:0}
+.frame{
+  position:relative;padding:6px;background:linear-gradient(135deg,var(--magenta),var(--cyan));
+  clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut));
+}
+.frame img{display:block;width:100%;height:auto;background:var(--bg-2);
+  clip-path:polygon(calc(var(--cut) - 4px) 0,100% 0,100% calc(100% - var(--cut) + 4px),calc(100% - var(--cut) + 4px) 100%,0 100%,0 calc(var(--cut) - 4px))}
+.phones .frame{width:min(31%, 210px)}
+.phones figure{flex:0 1 210px;min-width:0}
+.phones figure .frame{width:100%}
+figcaption{font:400 .75rem/1.3 var(--f-mono);color:var(--muted);margin-top:8px;letter-spacing:.06em;text-align:center}
+.tab-stack{position:relative;padding-bottom:18%}
+.tab-stack .phone-over{position:absolute;right:-2%;bottom:0;width:26%}
+.duo{display:flex;justify-content:center;gap:24px;align-items:center;flex-wrap:wrap}
+.duo figure{flex:0 1 250px;min-width:0}
+
+/* Placeholder panels (no screenshots yet) */
+.panel{border:1px solid var(--line);background:var(--bg-2);padding:28px;position:relative;
+  clip-path:polygon(var(--cut) 0,100% 0,100% calc(100% - var(--cut)),calc(100% - var(--cut)) 100%,0 100%,0 var(--cut))}
+.panel .mono{color:var(--muted);font-size:.8rem;letter-spacing:.08em}
+.senior{display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;align-items:center}
+.senior img{width:120px;height:120px;display:block;border-radius:26px}
+.senior ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-family:var(--f-display);font-size:1.1rem}
+.senior li span{color:var(--volt);font-family:var(--f-mono);font-size:.8rem;margin-right:10px}
+.wippe svg{width:100%;height:auto;display:block}
+.board{transform-origin:240px 180px;animation:tilt 3.2s ease-in-out infinite}
+@keyframes tilt{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+.klick{animation:klick 1.6s steps(1) infinite}
+@keyframes klick{0%,30%{opacity:1}31%,100%{opacity:0}}
+
+/* Impressum */
+.imp{padding-block:40px 64px}
+.console{margin-top:24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px}
+.console .panel h3{font:600 1.15rem/1.2 var(--f-display);margin:0 0 12px;color:var(--cyan)}
+.console address{font-style:normal;line-height:1.7}
+.ph{background:color-mix(in srgb, var(--volt) 18%, transparent);color:var(--volt);padding:0 4px;font-family:var(--f-mono);font-size:.92em}
+.console p{margin:0 0 10px;color:color-mix(in srgb, var(--fg) 86%, var(--muted));font-size:.97rem}
+footer{border-top:1px solid var(--line)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:20px;font:400 .82rem/1.4 var(--f-mono);color:var(--muted)}
+
+@media (max-width:860px){
+  .hero .wrap,.app,.console{grid-template-columns:minmax(0,1fr)}
+  .app:nth-child(even) .media{order:0}
+  .logo-big{width:220px;order:-1;justify-self:start}
+  .hero{padding-block:40px 32px}
+  .app{gap:28px;padding-block:40px}
+}
+@media (max-width:480px){
+  nav{gap:12px} nav a{font-size:.72rem;letter-spacing:.08em}
+  .senior{grid-template-columns:minmax(0,1fr)}
+  .phones{gap:8px}
+}
+@media (prefers-reduced-motion:reduce){
+  .glitch .g-m,.glitch .g-c,.pulse,.board,.klick{animation:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="kmark" viewBox="0 0 120 120">
+      <polygon points="26,6 94,6 114,26 114,94 94,114 26,114 6,94 6,26" fill="none" stroke="currentColor" stroke-width="3"/>
+      <path d="M40 28V92M42 64L80 30M58 50L82 90" fill="none" stroke="currentColor" stroke-width="9" stroke-linecap="square"/>
+      <path d="M80 30H98M82 90H98V76" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <circle cx="98" cy="30" r="4.5" fill="currentColor"/>
+      <circle cx="98" cy="74" r="4.5" fill="currentColor"/>
+      <path d="M40 92V104H22" fill="none" stroke="currentColor" stroke-width="2.5"/>
+      <circle cx="20" cy="104" r="4.5" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#start" aria-label="kober-ai.com Startseite">
+      <svg viewBox="0 0 120 120" aria-hidden="true">
+        <use href="#kmark" x="-2" style="color:var(--magenta)"/>
+        <use href="#kmark" x="2" style="color:var(--cyan)"/>
+        <use href="#kmark" style="color:var(--fg)"/>
+      </svg>
+      <span class="word">kober<span class="dot">-</span><span class="ai">ai</span><span class="tld">.com</span></span>
+    </a>
+    <nav aria-label="Hauptnavigation">
+      <a href="#apps">Apps</a>
+      <a href="#impressum">Impressum</a>
+      <a href="#datenschutz">Datenschutz</a>
+    </nav>
+  </div>
+</header>
+
+<main id="start">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">kober-ai.com · Andreas Kober</div>
+        <h1>Apps mit einer <span class="hl">klaren Aufgabe.</span></h1>
+        <p class="lead">Ich entwickle eigene Apps für <strong>Android und iOS</strong>: zum Rechnenlernen, für den Alltag ab 65, für gute Gewohnheiten, fürs Tiertraining und für die Einsatzführung. Die Daten bleiben auf dem Gerät.</p>
+        <div class="stats" aria-label="Kurzüberblick">
+          <span><b>05</b> Apps</span>
+          <span><b>15</b> Sprachen max.</span>
+          <span><b>0</b> Werbebanner</span>
+          <span><b class="pulse">●</b> offline-first</span>
+        </div>
+      </div>
+      <div class="logo-big glitch" aria-hidden="true">
+        <svg viewBox="0 0 120 120">
+          <g class="g-m" style="color:var(--magenta)"><use href="#kmark"/></g>
+          <g class="g-c" style="color:var(--cyan)"><use href="#kmark"/></g>
+          <g style="color:var(--fg)"><use href="#kmark"/></g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="apps" id="apps">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Die Apps</h2>
+        <span class="mono">// Stand Oktober 2026</span>
+      </div>
+
+      <div class="app-list">
+        <!-- Mathe Held -->
+        <article class="app" id="mathe-held">
+          <div>
+            <div class="id">App 01 · Bildung</div>
+            <h3>Mathe Held</h3>
+            <p class="tagline">Rechnen üben für die Klassen 1 bis 6.</p>
+            <p>Vom kleinen 1×1 bis zu Brüchen und Geometrie, passend zu den Grundschul-Lehrplänen. Boss-Kämpfe, Sterne und ein Duell-Modus für zwei Kinder halten die Motivation hoch.</p>
+            <ul class="feats">
+              <li>Fehler-Training wiederholt falsch gelöste Aufgaben gezielt</li>
+              <li>Bis zu 4 Kinderprofile und ein Eltern-Dashboard</li>
+              <li>Kein Konto, kein Tracking, keine In-App-Käufe</li>
+            </ul>
+            <div class="chips"><span class="chip st">In Vorbereitung</span><span class="chip">Android · iOS</span><span class="chip">10 Sprachen</span></div>
+          </div>
+          <div class="media">
+            <div class="duo">
+              <figure>
+                <div class="frame"><img src="img/mathe-start.webp" width="520" height="1004" alt="Mathe Held: Startbildschirm mit Themen wie Kleines 1x1, Bruchrechnen und Uhren &amp; Zeit" loading="lazy"></div>
+                <figcaption>Startbildschirm · Themenwahl</figcaption>
+              </figure>
+            </div>
+          </div>
+        </article>
+
+        <!-- SeniorCompanion -->
+        <article class="app" id="seniorcompanion">
+          <div>
+            <div class="id">App 02 · Alltag ab 65</div>
+            <h3>SeniorCompanion</h3>
+            <p class="tagline">Ein Begleiter für jeden Tag, in sehr großer Schrift.</p>
+            <p>Jeden Tag ein kleiner Weg: Stimmung am Morgen, ein Rätsel, fünf Minuten Bewegung im Sitzen, etwas Neues und eine Erinnerungsfrage für das eigene Lebensbuch.</p>
+            <ul class="feats">
+              <li>Lupe mit Vorlesefunktion, auch ohne Internet</li>
+              <li>Medikamenten- und Termin-Erinnerung</li>
+              <li>Telefonbuch mit großen Foto-Kacheln</li>
+            </ul>
+            <div class="chips"><span class="chip st">In Entwicklung</span><span class="chip">Android · iOS</span><span class="chip">ohne Konto</span></div>
+          </div>
+          <div class="media">
+            <div class="panel">
+              <div class="senior">
+                <img src="img/senior-icon.webp" width="360" height="360" alt="App-Symbol von SeniorCompanion: aufgehende Sonne">
+                <ul>
+                  <li><span>06:30</span>Guten Morgen</li>
+                  <li><span>10:00</span>Rätsel des Tages</li>
+                  <li><span>15:00</span>Fünf Minuten Bewegung</li>
+                  <li><span>19:00</span>Abendrückblick</li>
+                </ul>
+              </div>
+              <p class="mono" style="margin:20px 0 0">// Screenshots folgen</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Proud & Discipline -->
+        <article class="app" id="proud-discipline">
+          <div>
+            <div class="id">App 03 · Gewohnheiten</div>
+            <h3>Proud &amp; Discipline</h3>
+            <p class="tagline">Gewohnheiten bewerten und festhalten, worauf du stolz bist.</p>
+            <p>Jeden Abend bewertest du jede Gewohnheit mit 1 bis 5 Sternen. Dazu schreibst du ins Tagebuch, was heute gut lief. Statistiken und Meilensteine zeigen den Fortschritt.</p>
+            <ul class="feats">
+              <li>42 Vorlagen in 7 Kategorien</li>
+              <li>Funktioniert ohne Konto, Sync optional</li>
+              <li>Serien und Meilensteine wie „100 Tage in Folge“</li>
+            </ul>
+            <div class="chips"><span class="chip st">In Vorbereitung</span><span class="chip">Android · iOS</span><span class="chip">15 Sprachen</span><span class="chip">v2.3</span></div>
+          </div>
+          <div class="media">
+            <div class="phones">
+              <figure><div class="frame"><img src="img/pd-heute.webp" width="520" height="1125" alt="Proud &amp; Discipline: Tagesansicht mit Gewohnheiten und Sternebewertung" loading="lazy"></div><figcaption>Heute</figcaption></figure>
+              <figure><div class="frame"><img src="img/pd-tagebuch.webp" width="520" height="1125" alt="Proud &amp; Discipline: Tagebuch mit Einträgen, worauf man stolz ist" loading="lazy"></div><figcaption>Tagebuch</figcaption></figure>
+              <figure><div class="frame"><img src="img/pd-meilenstein.webp" width="520" height="1125" alt="Proud &amp; Discipline: Meilenstein 100 Tage in Folge" loading="lazy"></div><figcaption>Meilenstein</figcaption></figure>
+            </div>
+          </div>
+        </article>
+
+        
+
+  <section class="imp" id="impressum">
+    <div class="wrap">
+      <div class="sec-head">
+        <h2>Impressum &amp; Kontakt</h2>
+        <span class="mono">// § 5 DDG</span>
+      </div>
+      <div class="console">
+        <div class="panel">
+          <h3>Anbieter</h3>
+          <address>
+            Andreas Kober<br>
+            kober-ai.com<br>
+            <span class="ph">[Straße Hausnummer]</span><br>
+            <span class="ph">[PLZ Ort]</span><br>
+            Deutschland
+          </address>
+          <p style="margin-top:14px">E-Mail: <span class="ph">[kontakt@kober-ai.com]</span><br>
+          Telefon: <span class="ph">[Telefonnummer]</span></p>
+          <p>Umsatzsteuer: <span class="ph">[Kleinunternehmer gemäß § 19 UStG – nach Bestätigung durch das Finanzamt]</span></p>
+        </div>
+        <div class="panel" id="datenschutz">
+          <h3>Datenschutz</h3>
+          <p>Diese Website setzt keine Cookies und verwendet kein Tracking. Beim Aufruf verarbeitet der Webhoster technisch notwendige Daten wie die IP-Adresse in Server-Logfiles.</p>
+          <p>Für jede App gibt es eine eigene Datenschutzerklärung. Sie wird hier verlinkt, sobald die App im Store erscheint.</p>
+          <p>Verantwortlich: Andreas Kober, Anschrift siehe links.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Andreas Kober · kober-ai.com</span>
+  </div>
+</footer>
+
+</body>
+</html>
